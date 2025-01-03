@@ -87,6 +87,8 @@ body {
 }
 
 .description-image img {
+    width: 300px;
+    height: 300px;
     max-width: 70%;
     max-height: auto;
     border-radius: 8px;
@@ -160,8 +162,8 @@ body {
 }
 
 .matiere-icon img {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 50%;
     transition: transform 0.3s ease;
@@ -268,6 +270,8 @@ body {
 }
 
 .activite img {
+    width: 300px;
+    height: 300px;
     max-width: 100%;
     border-radius: 8px;
     margin-bottom: 15px;
