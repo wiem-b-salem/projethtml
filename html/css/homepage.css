@@ -1,0 +1,487 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fde8df;
+    color: #6b3c2d;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header */
+header {
+    background-image: url('../images/backgound.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 50px;
+    position: relative;
+}
+
+    header .logo {
+        z-index: 1;
+        color: #cee2f8; /* Keeps logo above background */
+    }
+    
+    nav a {
+        margin: 0 15px;
+        color: #6b2d68;
+    }
+    
+    nav a:hover {
+        text-decoration: underline;
+    }
+    
+    .btn-now {
+        background-color: #f87761;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1;
+    }
+    
+    .header-logo img {
+        width: 300px;
+        height: 30px;
+        object-fit: cover;
+    }
+
+    
+    
+    /* Cards Section */
+    .education-section {
+        text-align: center;
+        margin: 50px 0;
+    }
+    
+    .education-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        color: #7a3b31;
+    }
+    
+    .cards-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 40px;
+    }
+    
+    .card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 30px;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card img {
+        width: 250px;
+        margin-bottom: 20px;
+    }
+    
+    .card h3 {
+        font-size: 1.5rem;
+        color: #6b3c2d;
+        margin-bottom: 10px;
+    }
+    
+    .card p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    
+    .card a {
+        background-color: #ff7e66;
+        padding: 15px 20px;
+        color: white;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        display: inline-block;
+    }
+    
+    /* Team Section */
+    .team-section {
+        text-align: center;
+        margin: 50px 0;
+    }
+    
+    .team-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        color: #7a3b31;
+    }
+    
+    .team-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 40px;
+    }
+
+    
+/* Gallery Section */
+
+
+.gallery-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.gallery-slide {
+    display: flex;
+    width: 30; /* Adjust to fit all images */
+    animation: slide 40s linear infinite; /* Slower animation */
+}
+
+.gallery-slide img {
+    height: 200px;
+    max-width: 450px;
+    margin: 0 10px;
+    border-radius: 8px;
+}
+
+.gallery-container.reverse .gallery-slide {
+    animation: reverse-slide 40s linear infinite; /* Slower animation */
+}
+
+/* Animations */
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-80vw * 5)); } /* Adjust based on the number of images */
+}
+
+@keyframes reverse-slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(80vw * 5)); } /* Adjust based on the number of images */
+}
+    
+    /* Footer */
+    .footer {
+        background-color: #fa73a0;
+        color: white;
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+    
+    .footer .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    .footer-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-left .footer-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .footer-left .footer-logo img {
+        width: 150px;
+        height: auto;
+        margin-right: 10px;
+    }
+    
+    .footer-left h3 {
+        font-size: 1.6rem;
+        font-family: 'Playfair Display', serif;
+        font-weight: bold;
+    }
+    
+    .footer-left .social-media {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .footer-left .social-media img {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+    }
+    
+    .footer-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-right ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .footer-right li {
+        margin-bottom: 8px;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding: 15px 0;
+        background-color: #222;
+        margin-top: 40px;
+    }
+    
+    .footer-bottom small {
+        margin: 0;
+        font-size: 1rem;
+    }
+    
+    /* Section Description */
+    .description {
+        background-color: #e4f0f7;
+        padding: 50px 0;
+        text-align: left;
+    }
+    
+    .description .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    .description-image {
+        flex: 1;
+        display: flex;
+        justify-content: left;
+    }
+    
+    .description-image img {
+        max-width: 70%;
+        max-height: auto;
+        border-radius: 8px;
+    }
+    
+    .description-text {
+        flex: 1;
+        padding-left: 20px;
+        justify-content: right;
+    }
+    
+    .description-text p {
+        font-family: 'Georgia', serif;
+    }
+    
+    .description-text h2 {
+        margin-bottom: 20px;
+        color: #333;
+        font-family: Catamaran, sans-serif;
+        font-size: 18px;
+        display: inline-block;
+        white-space: nowrap;
+    }
+    
+    /* Activités */
+    .activites {
+        background-color: #fff5e5;
+        padding: 50px 0;
+    }
+    
+    .activites h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-family: 'Playfair Display', serif;
+        font-size: 30px;
+    }
+    
+    .activites-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .activite {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        width: 300px;
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.5s ease;
+    }
+    
+    .activite:hover {
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 1);
+    }
+    
+    .activite img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .activite h3 {
+        margin-bottom: 10px;
+        color: #ff6b81;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .activite p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 20px;
+    }
+    
+    /* Plan d'études */
+    .plan-etudes {
+        background-color: #f0f8ff;
+        padding: 50px 0;
+        text-align: center;
+    }
+    
+    .plan-etudes h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 30px;
+        color: black;
+        margin-bottom: 40px;
+    }
+    
+    /* Conteneur des cartes de programme éducatif */
+    .etudes-grid {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    /* Carte de chaque programme éducatif */
+    .etude {
+        background-color: #fff;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .etude:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .etude h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #ff6b81;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .etude p {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 20px;
+    }
+    
+    .button {
+        background-color: #ff6b81;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+    
+    .button:hover {
+        background-color: #ff4f66;
+    }
+
+    /* General Styles */
+.section.galerie {
+    overflow: hidden;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.galerie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Gallery Container */
+.gallery-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-slide {
+    display: flex;
+    animation: slideLeft 15s linear infinite;
+    gap: 10px; /* Add space between images */
+}
+
+.gallery-container.reverse .gallery-slide {
+    animation: slideRight 15s linear infinite;
+}
+
+/* Image Styling */
+.gallery-slide img {
+    height: 150px; /* Adjust as needed */
+    flex-shrink: 0;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Hover Effect */
+.gallery-slide img:hover {
+    transform: scale(1.1);
+}
+
+/* Keyframes for Animation */
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-100% + 100vw));
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(calc(-100% + 100vw));
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
