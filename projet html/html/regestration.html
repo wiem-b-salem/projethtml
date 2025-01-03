@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/registration.css">
+</head>
+<body>
+     <!-- ras -->
+     <header>
+        <h1>Place your trust on us !</h1>
+        <p>We can't wait to welcome your little sapling!</p>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="homepage.html">Back to Home Page</a>
+    </nav>
+
+    <!-- tableau register -->
+    <main>
+        <div class="contact-form-container">
+            <h2>Registration Form</h2>
+            <form action="submit_registration.php" method="post">
+                <label for="parent-name">Parent's Full Name</label>
+                <input type="text" id="parent-name" name="parent_name" placeholder="Enter your name" required>
+
+                <label for="email">Parent's Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+                <label for="phone">Secondary Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" >
+
+                <label for="child-name">Child's Full Name</label>
+                <input type="text" id="child-name" name="child_name" placeholder="Enter your child's name" required>
+
+                
+                <label for="text">Child's Age</label>
+                <select id="age" name="age" required>
+                    <option value="" disabled selected>Select age</option>
+                    <option value="3rd Grade">3 y.o</option>
+                    <option value="4th Grade">4 y.o</option>
+                    <option value="5th Grade">5 y.o</option>
+                </select>
+                
+                <label for="level">Child's Level of Education</label>
+                <select id="level" name="level" required>
+                    <option value="" disabled selected>Select level</option>
+                    <option value="3rd Grade">3rd Grade</option>
+                    <option value="4th Grade">4th Grade</option>
+                    <option value="5th Grade">5th Grade</option>
+                </select>
+
+                
+            </form>
+
+        </div>
+        <br>
+
+        <div class="contact-form-container">
+            <h2>Child's Health Information</h2>
+            <form action="submit_health_info.php" method="post">
+                <label for="allergies">
+                    Does your child have allergies?
+                    <input type="checkbox" id="allergies" name="allergies">
+                    
+                </label>
+                <textarea id="allergies-details" name="allergies_details" placeholder="Please list the allergies"  ></textarea>
+
+                <label for="disability">
+                    Does your child have a disability or special needs?
+                    <input type="checkbox" id="disability" name="disability">
+                    
+                </label>
+                <textarea id="disability-details" name="disability_details" placeholder="Please provide details"  ></textarea>
+
+                <label for="other-health-info">
+                    Any other relevant health information?
+                    <input type="checkbox" id="other-health-info" name="other_health_info">
+                    
+                </label>
+                <textarea id="other-details" name="other_details" placeholder="Please provide details"  ></textarea>
+
+                <div class="terms">
+                    
+                    <label for="terms">
+                        I agree to the <a href="terms-and-conditions.html" target="_blank">terms and conditions</a>.
+                    </label>
+                    <input type="checkbox" id="terms" name="terms" required>
+                </div>
+
+            </form>
+        </div>
+        <br>
+        <div class="notice">
+            <h2>Important Information</h2>
+            <form action="" method="post">
+                <label for="Importantinformation">
+                    By clicking "Register," you acknowledge that the information provided will be securely transmitted to our servers. 
+                    We value your trust and ensure the confidentiality of all shared details. 
+                    Following your submission, we will contact you via email and phone to schedule a meeting. 
+                    Please notify us promptly if you anticipate being late or absent. During this meeting, 
+                    a contract outlining the cooperation between our institution and the parents will be signed. 
+                    Our top priority is the safety, health, and well-being of every child under our care.
+                </label>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+
+    </main>
+
+    
+</body>
+</html>
