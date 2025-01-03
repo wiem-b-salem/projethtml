@@ -5,7 +5,7 @@ body, h1, h2, h3, p, form {
     font-family: Arial, sans-serif;
 }
 body {
-    background-color: #ffece1;
+    background-color: #dae5f0;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@ header {
     color: white;
     text-align: center;
     padding: 20px 15px;
-    border-bottom: 3px solid #cc5b33;
+    border-bottom: 3px solid #ff8c66;
 }
 header h1 {
     font-size: 2.5em;
@@ -29,7 +29,7 @@ header p {
     margin-top: 0;
 }
 nav {
-    background-color: #ff7043;
+    background-color: #fa73a0;
     display: flex;
     justify-content: center;
     padding: 10px 0;
@@ -63,10 +63,10 @@ main {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
-    border: 2px solid #ff8c66;
+    border: 2px solid #8ff0b4;
 }
 .contact-form-container h2 {
-    color: #cc5b33;
+    color: #fc78c9;
     margin-bottom: 20px;
     font-size: 1.8em;
 }
@@ -152,7 +152,7 @@ form button {
     transition: background-color 0.3s ease;
 }
 form button:hover {
-    background-color: #cc5b33;
+    background-color: #fd1c60;
 }
 
 /* Adjustments for Small Screens */
@@ -183,10 +183,10 @@ form button:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
-    border: 2px solid #ff8c66;
+    border: 2px solid #fd1c60;
 }
 .notice h2 {
-    color: #cc5b33;
+    color: #fd1c60;
     margin-bottom: 20px;
     font-size: 1.8em;
 }
