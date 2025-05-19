@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Parent - École Maternelle</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Tableau de Bord Parent 🌟</h1>
+        <p>Bienvenue dans votre espace personnel</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="homepage.html">← Retour à l'accueil</a>
+        <div class="user-info">
+            <span id="parentName">Parent Name</span>
+            <span id="childName">Child Name</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Progress Tracking Section -->
+        <section class="dashboard-section" id="progress">
+            <h2>Progrès de l'Enfant 📈</h2>
+            <div class="progress-grid">
+                <div class="progress-card">
+                    <h3>Développement Social</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 85%"></div>
+                    </div>
+                    <p>85%</p>
+                </div>
+                <div class="progress-card">
+                    <h3>Compétences Cognitives</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 90%"></div>
+                    </div>
+                    <p>90%</p>
+                </div>
+                <div class="progress-card">
+                    <h3>Développement Physique</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 75%"></div>
+                    </div>
+                    <p>75%</p>
+                </div>
+                <div class="progress-card">
+                    <h3>Compétences Artistiques</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 95%"></div>
+                    </div>
+                    <p>95%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Activity Reports -->
+        <section class="dashboard-section" id="activities">
+            <h2>Rapports d'Activités 📝</h2>
+            <div class="activity-filters">
+                <button class="filter-btn active" data-filter="all">Tout</button>
+                <button class="filter-btn" data-filter="today">Aujourd'hui</button>
+                <button class="filter-btn" data-filter="week">Cette Semaine</button>
+                <button class="filter-btn" data-filter="month">Ce Mois</button>
+            </div>
+            <div class="activity-list">
+                <!-- Activities will be loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section class="dashboard-section" id="gallery">
+            <h2>Galerie Photos 📸</h2>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Toutes</button>
+                <button class="filter-btn" data-filter="art">Art</button>
+                <button class="filter-btn" data-filter="sports">Sports</button>
+                <button class="filter-btn" data-filter="activities">Activités</button>
+            </div>
+            <div class="photo-gallery">
+                <!-- Photos will be loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Communication System -->
+        <section class="dashboard-section" id="communication">
+            <h2>Communication avec les Enseignants 💬</h2>
+            <div class="communication-container">
+                <div class="message-list">
+                    <!-- Messages will be loaded dynamically -->
+                </div>
+                <div class="message-form">
+                    <h3>Envoyer un Message</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="teacher">Enseignant:</label>
+                            <select id="teacher" required>
+                                <option value="">Sélectionner un enseignant</option>
+                                <option value="1">Mme. Smith</option>
+                                <option value="2">M. Johnson</option>
+                                <option value="3">Mme. Brown</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet:</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="dashboard-section" id="faq">
+            <h2>Questions Fréquentes ❓</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Comment puis-je suivre les progrès de mon enfant ?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Vous pouvez suivre les progrès de votre enfant dans la section "Progrès de l'Enfant" ci-dessus. Les rapports sont mis à jour régulièrement par les enseignants.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Comment contacter les enseignants ?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Vous pouvez utiliser la section "Communication" pour envoyer des messages aux enseignants. Ils répondront généralement dans les 24 heures.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Comment voir les photos de mon enfant ?</h3>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Les photos sont régulièrement ajoutées dans la section "Galerie Photos". Vous pouvez les filtrer par catégorie et les télécharger.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>🏫 École des Petits Génies</p>
+        <p>🌟 Où chaque enfant est une étoile qui brille</p>
+        <p>📞 Contactez-nous : support@petitsgenies.fr</p>
+        <p>© 2024 Tous droits réservés</p>
+    </footer>
+
+    <script src="../js/dashboard.js"></script>
+</body>
+</html> 
