@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - École Maternelle</title>
+    <link rel="stylesheet" href="../css/regestration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Bienvenue à l'École des Petits Génies! 🌟</h1>
+        <p>Nous avons hâte d'accueillir votre petit bout de chou ! 🎨</p>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="homepage.html">← Retour à la page d'accueil</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="contact-form-container fade-in">
+            <h2>Formulaire d'inscription</h2>
+            <form id="registration-form" onsubmit="return false;">
+                <label for="parent-name">👤 Nom complet du parent</label>
+                <input type="text" id="parent-name" name="parent_name" placeholder="Entrez votre nom" required>
+
+                <label for="email">📧 Email du parent</label>
+                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+
+                <label for="phone">📞 Numéro de téléphone (8 chiffres requis)</label>
+                <input type="tel" id="phone" name="phone" placeholder="Exemple: 12345678" pattern="\d{8}" maxlength="8" required>
+                <small class="input-hint">Entrez exactement 8 chiffres</small>
+
+                <label for="phone-secondary">📱 Numéro de téléphone secondaire</label>
+                <input type="tel" id="phone-secondary" name="phone_secondary" placeholder="Exemple: 12345678" pattern="\d{8}" maxlength="8">
+                <small class="input-hint">Optionnel - 8 chiffres si renseigné</small>
+
+                <label for="child-name">👶 Nom complet de l'enfant</label>
+                <input type="text" id="child-name" name="child_name" placeholder="Entrez le nom de votre enfant" required>
+
+                <label for="age">🎂 Âge de l'enfant</label>
+                <select id="age" name="age" required>
+                    <option value="" disabled selected>Sélectionnez l'âge</option>
+                    <option value="3">3 ans</option>
+                    <option value="4">4 ans</option>
+                    <option value="5">5 ans</option>
+                </select>
+
+                <label for="level">📚 Niveau d'éducation</label>
+                <select id="level" name="level" required>
+                    <option value="" disabled selected>Sélectionnez le niveau</option>
+                    <option value="3rd Grade">3ème année</option>
+                    <option value="4th Grade">4ème année</option>
+                    <option value="5th Grade">5ème année</option>
+                </select>
+
+                <button type="submit" class="submit-btn">Continuer ➡️</button>
+            </form>
+        </div>
+
+        <div class="contact-form-container fade-in">
+            <h2>🏥 Informations de santé</h2>
+            <form id="health-form" onsubmit="return false;">
+                <label for="allergies">
+                    🌿 Votre enfant a-t-il des allergies ?
+                    <input type="checkbox" id="allergies" name="allergies">
+                </label>
+                <textarea id="allergies-details" name="allergies_details" placeholder="Décrivez les allergies de votre enfant"></textarea>
+
+                <label for="disability">
+                    ⭐ Votre enfant a-t-il des besoins particuliers ?
+                    <input type="checkbox" id="disability" name="disability">
+                </label>
+                <textarea id="disability-details" name="disability_details" placeholder="Décrivez les besoins particuliers"></textarea>
+
+                <label for="other-health-info">
+                    ℹ️ Autres informations de santé ?
+                    <input type="checkbox" id="other-health-info" name="other_health_info">
+                </label>
+                <textarea id="other-details" name="other_details" placeholder="Autres informations importantes"></textarea>
+
+                <div class="terms">
+                    <label for="terms">
+                        📜 J'accepte les <a href="terms-and-conditions.html" target="_blank">termes et conditions</a>
+                    </label>
+                    <input type="checkbox" id="terms" name="terms" required>
+                </div>
+
+                <button type="submit" class="submit-btn">S'inscrire 🎉</button>
+            </form>
+        </div>
+
+        <div class="notice fade-in">
+            <h2>📢 Informations importantes</h2>
+            <p>
+                En cliquant sur "S'inscrire", vous reconnaissez que les informations fournies seront transmises en toute sécurité. 
+                Nous apprécions votre confiance et assurons la confidentialité de tous les détails partagés. 
+                Après votre soumission, nous vous contacterons par email et téléphone pour planifier une réunion. 
+                Veuillez nous informer rapidement si vous prévoyez d'être en retard ou absent. Lors de cette réunion, 
+                un contrat définissant la coopération entre notre institution et les parents sera signé. 
+                Notre priorité absolue est la sécurité, la santé et le bien-être de chaque enfant sous notre garde.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>🏫 École des Petits Génies</p>
+        <p>🌟 Où chaque enfant est une étoile qui brille</p>
+        <p>📞 Contactez-nous : support@petitsgenies.fr</p>
+        <p>© 2024 Tous droits réservés</p>
+    </footer>
+
+    <script src="js/registration.js"></script>
+</body>
+</html>
