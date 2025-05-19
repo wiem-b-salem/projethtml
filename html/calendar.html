@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier - École Maternelle</title>
+    <link rel="stylesheet" href="../css/calendar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Calendrier des Événements 📅</h1>
+        <p>Restez informés des événements de l'École des Petits Génies! 🌟</p>
+    </header>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="homepage.html">← Retour à la page d'accueil</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="calendar-container">
+            <!-- Calendar Navigation -->
+            <div class="calendar-header">
+                <button id="prevMonth">←</button>
+                <h2 id="currentMonth">Mois Année</h2>
+                <button id="nextMonth">→</button>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="calendar-grid">
+                <div class="weekdays">
+                    <div>Dim</div>
+                    <div>Lun</div>
+                    <div>Mar</div>
+                    <div>Mer</div>
+                    <div>Jeu</div>
+                    <div>Ven</div>
+                    <div>Sam</div>
+                </div>
+                <div id="calendarDays" class="days"></div>
+            </div>
+
+            <!-- Event Details Modal -->
+            <div id="eventModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="eventTitle">Titre de l'événement</h2>
+                    <div id="eventDetails">
+                        <p id="eventDate">Date</p>
+                        <p id="eventTime">Heure</p>
+                        <p id="eventDescription">Description</p>
+                    </div>
+                    <div id="eventGallery" class="event-gallery"></div>
+                    <div class="modal-actions">
+                        <button id="setReminder" class="action-btn">🔔 Définir un rappel</button>
+                        <button id="bookMeeting" class="action-btn">📅 Réserver un rendez-vous</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meeting Scheduler Modal -->
+            <div id="meetingModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Réserver un rendez-vous</h2>
+                    <form id="meetingForm">
+                        <div class="form-group">
+                            <label for="meetingDate">Date:</label>
+                            <input type="date" id="meetingDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingTime">Heure:</label>
+                            <select id="meetingTime" required>
+                                <option value="">Sélectionnez une heure</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingTeacher">Enseignant:</label>
+                            <select id="meetingTeacher" required>
+                                <option value="">Sélectionnez un enseignant</option>
+                                <option value="teacher1">Juliette Louis</option>
+                                <option value="teacher2">Genevive Manon</option>
+                                <option value="teacher3">Camille Jean</option>
+                                <option value="teacher4">Anna Hugo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="meetingReason">Raison du rendez-vous:</label>
+                            <textarea id="meetingReason" required></textarea>
+                        </div>
+                        <button type="submit" class="action-btn">Confirmer le rendez-vous</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Reminder Modal -->
+            <div id="reminderModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Définir un rappel</h2>
+                    <form id="reminderForm">
+                        <div class="form-group">
+                            <label for="reminderDate">Date du rappel:</label>
+                            <input type="date" id="reminderDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reminderTime">Heure du rappel:</label>
+                            <input type="time" id="reminderTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reminderMethod">Méthode de rappel:</label>
+                            <select id="reminderMethod" required>
+                                <option value="email">Email</option>
+                                <option value="notification">Notification navigateur</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="action-btn">Définir le rappel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>🏫 École des Petits Génies</p>
+        <p>🌟 Où chaque enfant est une étoile qui brille</p>
+        <p>📞 Contactez-nous : support@petitsgenies.fr</p>
+        <p>© 2024 Tous droits réservés</p>
+    </footer>
+
+    <script src="../js/calendar.js"></script>
+</body>
+</html> 

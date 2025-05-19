@@ -1,0 +1,203 @@
+/* General Styles */
+body {
+    font-family: 'Comic Neue', cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f9ff;
+    color: #333;
+}
+
+header {
+    background-color: #ffd6e0;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    color: #ff6b6b;
+    font-size: 2.5rem;
+}
+
+nav {
+    background-color: #fff;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav a {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Schedule Container */
+.schedule-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: #ffd6e0;
+    border-radius: 2px;
+}
+
+/* Activity Cards */
+.activity {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.activity:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.activity:nth-child(odd) {
+    margin-left: 0;
+}
+
+.activity:nth-child(even) {
+    margin-left: auto;
+}
+
+.activity-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.activity h3 {
+    color: #ff6b6b;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.activity p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.activity-details {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px dashed #ffd6e0;
+}
+
+.activity.active .activity-details {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Time Badge */
+.activity::before {
+    content: attr(data-time);
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff6b6b;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Action Buttons */
+.schedule-actions {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.action-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 0 1rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #ff5252;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #ffd6e0;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin: 0.5rem 0;
+    color: #ff6b6b;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .activity {
+        width: 90%;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .activity {
+        margin-left: 60px;
+    }
+    
+    .activity:nth-child(even) {
+        margin-left: 60px;
+    }
+    
+    .action-btn {
+        display: block;
+        margin: 1rem auto;
+        width: 80%;
+    }
+} 
