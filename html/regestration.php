@@ -179,7 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <option value="5th Grade">5ème année</option>
                 </select>
 
-                <button type="submit" class="submit-btn">Continuer ➡️</button>
             </form>
         </div>
 

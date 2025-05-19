@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once '../config/database.php';
+require_once 'C:\laragon\www\projethtml-main\projethtml-main\html\config\database.php';
+$pdo = getDBConnection();
 
 $message = '';
 $messageType = '';
