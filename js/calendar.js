@@ -1,82 +1,56 @@
-// Sample events data (in a real application, this would come from a database)
-const currentYear = new Date().getFullYear();
-const events = [
-    {
-        id: 1,
-        title: "Journée Portes Ouvertes",
-        date: `${currentYear}-03-15`,
-        time: "09:00",
-        description: "Venez découvrir notre école et rencontrer notre équipe pédagogique!",
-        images: [
-            "../images/events/open-day-1.jpg",
-            "../images/events/open-day-2.jpg"
-        ]
-    },
-    {
-        id: 2,
-        title: "Spectacle de Printemps",
-        date: `${currentYear}-03-20`,
-        time: "14:00",
-        description: "Les enfants présenteront leur spectacle de printemps dans la salle polyvalente.",
-        images: [
-            "../images/events/spring-show-1.jpg",
-            "../images/events/spring-show-2.jpg"
-        ]
-    },
-    {
-        id: 3,
-        title: "Réunion Parents-Professeurs",
-        date: `${currentYear}-03-25`,
-        time: "16:00",
-        description: "Réunion trimestrielle pour discuter du progrès des enfants.",
-        images: []
-    }
-];
-
 // Calendar functionality
 class Calendar {
     constructor() {
         this.currentDate = new Date();
-        this.events = events;
-        this.init();
+        this.events = window.events || []; // Use events from PHP
     }
 
-    init() {
-        this.setupCalendar();
+    initializeCalendar() {
+        // Get all required elements
+        const elements = {
+            calendarDays: document.getElementById('calendarDays'),
+            currentMonth: document.getElementById('currentMonth'),
+            prevMonth: document.getElementById('prevMonth'),
+            nextMonth: document.getElementById('nextMonth'),
+            eventModal: document.getElementById('eventModal'),
+            closeButtons: document.getElementsByClassName('close')
+        };
+
+        // Check if all required elements exist
+        const missingElements = Object.entries(elements)
+            .filter(([key, element]) => !element)
+            .map(([key]) => key);
+
+        if (missingElements.length > 0) {
+            console.error('Missing required elements:', missingElements);
+            return;
+        }
+
+        // Store elements in the instance
+        Object.assign(this, elements);
+
+        // Setup event listeners and render calendar
         this.setupEventListeners();
         this.renderCalendar();
     }
 
-    setupCalendar() {
-        this.calendarDays = document.getElementById('calendarDays');
-        this.currentMonthElement = document.getElementById('currentMonth');
-        this.prevMonthBtn = document.getElementById('prevMonth');
-        this.nextMonthBtn = document.getElementById('nextMonth');
-    }
-
     setupEventListeners() {
-        this.prevMonthBtn.addEventListener('click', () => this.changeMonth(-1));
-        this.nextMonthBtn.addEventListener('click', () => this.changeMonth(1));
+        // Month navigation
+        this.prevMonth.addEventListener('click', () => this.changeMonth(-1));
+        this.nextMonth.addEventListener('click', () => this.changeMonth(1));
         
         // Modal close buttons
-        document.querySelectorAll('.close').forEach(button => {
+        Array.from(this.closeButtons).forEach(button => {
             button.addEventListener('click', () => {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.classList.remove('show');
-                });
+                this.eventModal.style.display = 'none';
             });
         });
 
-        // Meeting form submission
-        document.getElementById('meetingForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleMeetingSubmission();
-        });
-
-        // Reminder form submission
-        document.getElementById('reminderForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleReminderSubmission();
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === this.eventModal) {
+                this.eventModal.style.display = 'none';
+            }
         });
     }
 
@@ -85,7 +59,7 @@ class Calendar {
         const month = this.currentDate.getMonth();
         
         // Update month and year display
-        this.currentMonthElement.textContent = `${this.getMonthName(month)} ${year}`;
+        this.currentMonth.textContent = `${this.getMonthName(month)} ${year}`;
         
         // Clear previous calendar
         this.calendarDays.innerHTML = '';
@@ -148,42 +122,23 @@ class Calendar {
     }
 
     getEventsForDate(date) {
-        console.log('Current events array:', this.events);
-        console.log('Looking for events on date:', date);
-        const events = this.events.filter(event => {
-            console.log('Comparing event date:', event.date, 'with:', date);
-            return event.date === date;
-        });
-        console.log('Found events:', events);
-        return events;
+        return this.events.filter(event => event.event_date === date);
     }
 
     showEventDetails(event) {
-        const modal = document.getElementById('eventModal');
         const title = document.getElementById('eventTitle');
         const date = document.getElementById('eventDate');
         const time = document.getElementById('eventTime');
+        const location = document.getElementById('eventLocation');
         const description = document.getElementById('eventDescription');
-        const gallery = document.getElementById('eventGallery');
         
         title.textContent = event.title;
-        date.textContent = `Date: ${this.formatDate(event.date)}`;
-        time.textContent = `Heure: ${event.time}`;
-        description.textContent = event.description;
+        date.textContent = `Date: ${this.formatDate(event.event_date)}`;
+        time.textContent = `Heure: ${event.event_time}`;
+        location.textContent = `Lieu: ${event.location}`;
+        description.textContent = event.description || 'Aucune description disponible';
         
-        // Clear and populate gallery
-        gallery.innerHTML = '';
-        if (event.images && event.images.length > 0) {
-            event.images.forEach(image => {
-                const img = document.createElement('img');
-                img.src = image;
-                img.alt = event.title;
-                img.addEventListener('click', () => this.showFullImage(image));
-                gallery.appendChild(img);
-            });
-        }
-        
-        modal.classList.add('show');
+        this.eventModal.style.display = 'block';
     }
 
     formatDate(dateString) {
@@ -194,50 +149,10 @@ class Calendar {
             year: 'numeric'
         });
     }
-
-    showFullImage(imageSrc) {
-        const modal = document.createElement('div');
-        modal.className = 'modal show';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <img src="${imageSrc}" style="width: 100%; max-height: 80vh; object-fit: contain;">
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        modal.querySelector('.close').addEventListener('click', () => {
-            modal.remove();
-        });
-    }
-
-    handleMeetingSubmission() {
-        const form = document.getElementById('meetingForm');
-        const formData = new FormData(form);
-        
-        // In a real application, this would send the data to a server
-        console.log('Meeting scheduled:', Object.fromEntries(formData));
-        
-        alert('Rendez-vous confirmé! Vous recevrez un email de confirmation.');
-        document.getElementById('meetingModal').classList.remove('show');
-        form.reset();
-    }
-
-    handleReminderSubmission() {
-        const form = document.getElementById('reminderForm');
-        const formData = new FormData(form);
-        
-        // In a real application, this would send the data to a server
-        console.log('Reminder set:', Object.fromEntries(formData));
-        
-        alert('Rappel défini! Vous recevrez une notification.');
-        document.getElementById('reminderModal').classList.remove('show');
-        form.reset();
-    }
 }
 
-// Initialize calendar when DOM is loaded
+// Wait for DOM to be loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new Calendar();
+    const calendar = new Calendar();
+    calendar.initializeCalendar();
 }); 
