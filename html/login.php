@@ -1,7 +1,10 @@
 <?php
 session_start();
-require_once 'C:\laragon\www\projethtml-main\projethtml-main\html\config\database.php';
-$pdo = getDBConnection();
+require_once '../config/database.php';
+
+// Set up custom error logging
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/login_debug.log');
 
 $message = '';
 $messageType = '';
@@ -10,31 +13,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
+    // Log the login attempt
+    error_log("Login attempt - Email: " . $email);
+
     if (empty($email) || empty($password)) {
-        $message = "Please fill in all fields.";
+        $message = "Veuillez remplir tous les champs.";
         $messageType = 'error';
     } else {
         try {
-            $stmt = $pdo->prepare("SELECT * FROM parents WHERE email = ?");
-            $stmt->execute([$email]);
+            $pdo = getDBConnection();
             
-            if ($stmt->rowCount() == 1) {
-                $parent = $stmt->fetch();
-                if (password_verify($password, $parent['password'])) {
-                    $_SESSION['parent_id'] = $parent['id'];
-                    $_SESSION['parent_name'] = $parent['first_name'] . ' ' . $parent['last_name'];
-                    header("Location: dashboard.php");
-                    exit();
-                } else {
-                    $message = "Invalid password.";
-                    $messageType = 'error';
-                }
+            // Get user from database
+            $stmt = $pdo->prepare("SELECT id, first_name, last_name, password FROM parents WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Log the database query result
+            error_log("Database query result: " . ($user ? "User found" : "No user found"));
+            if ($user) {
+                error_log("Stored password hash: " . $user['password']);
+                error_log("Attempting to verify password");
+            }
+
+            if ($user && password_verify($password, $user['password'])) {
+                error_log("Password verified successfully");
+                // Set session variables
+                $_SESSION['parent_id'] = $user['id'];
+                $_SESSION['parent_name'] = $user['first_name'];
+                $_SESSION['parent_lastname'] = $user['last_name'];
+                
+                // Redirect to dashboard
+                header("Location: dashboard.php");
+                exit();
             } else {
-                $message = "Email not found.";
+                error_log("Login failed - Password verification failed or user not found");
+                $message = "Email ou mot de passe incorrect.";
                 $messageType = 'error';
             }
         } catch(PDOException $e) {
-            $message = "Login failed: " . $e->getMessage();
+            error_log("Database error: " . $e->getMessage());
+            $message = "Erreur de connexion: " . $e->getMessage();
             $messageType = 'error';
         }
     }
@@ -46,84 +64,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parent Login - Mes premiers pas</title>
-    <link rel="stylesheet" href="../../css/emepage.css">
-    <style>
-        .login-form {
-            max-width: 400px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .btn-submit {
-            background: #4CAF50;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .btn-submit:hover {
-            background: #45a049;
-        }
-        .message {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 1rem;
-        }
-    </style>
+    <title>Connexion - École Maternelle</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Bubblegum+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-logo">
-                <img src="../../images/logo.png" alt="Logo" class="header-image">
-            </div>
-            <h1>Mes premiers pas - L'école des futurs élites</h1>
-            <nav>
-                <ul>
-                    <li><a href="homepage.html">Home</a></li>
-                    <li><a href="register.php">Register</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header>
+        <h1>Bienvenue à l'École des Petits Génies! 🌟</h1>
+        <p>Nous sommes ravis de vous revoir ! 🎨</p>
+        <nav>
+            <a href="homepage.html">← Retour à la page d'accueil</a>
+        </nav>
     </header>
 
     <div class="container">
         <div class="login-form">
-            <h2>Parent Login</h2>
+            <h2>Connexion Parent</h2>
             <?php if ($message): ?>
                 <div class="message <?php echo $messageType; ?>">
                     <?php echo htmlspecialchars($message); ?>
@@ -132,29 +88,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <form method="POST" action="">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="email">📧 Email</label>
+                    <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="password">🔒 Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
                 </div>
 
-                <button type="submit" class="btn-submit">Login</button>
+                <button type="submit" class="btn-submit">Se connecter 🚀</button>
             </form>
             
             <div class="register-link">
-                <p>Don't have an account? <a href="register.php">Register here</a></p>
+                <p>Pas encore de compte ? <a href="regestration.php">Inscrivez-vous ici</a></p>
             </div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <small>&copy; 2024 Mes premiers pas - Jardin d'enfants. Tous droits réservés.</small>
-            </div>
+    <footer>
+        <div class="footer-bottom">
+            <p>🏫 École des Petits Génies</p>
+            <p>🌟 Où chaque enfant est une étoile qui brille</p>
+            <p>📞 Contactez-nous : support@petitsgenies.fr</p>
+            <p>© 2024 Tous droits réservés</p>
         </div>
     </footer>
 </body>

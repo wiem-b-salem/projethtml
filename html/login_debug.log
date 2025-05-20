@@ -1,0 +1,5 @@
+[20-May-2025 17:33:42 UTC] Login attempt - Email: test@test.com
+[20-May-2025 17:33:42 UTC] Database query result: User found
+[20-May-2025 17:33:42 UTC] Stored password hash: $2y$10$JRlklDCtgK.ZoiyPxz9Pyunl/UXvExJRHXoCH7BWeSLleZoS4qsRC
+[20-May-2025 17:33:42 UTC] Attempting to verify password
+[20-May-2025 17:33:42 UTC] Password verified successfully

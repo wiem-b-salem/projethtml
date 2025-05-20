@@ -1,14 +1,37 @@
+<!DOCTYPE html>
 <?php
+// Set up custom error logging
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/registration_debug.log');
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Log the registration attempt
+error_log("Registration attempt started");
+
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
 require_once '../config/database.php';
+$pdo = getDBConnection();
 
 $message = '';
 $messageType = ''; // 'success' or 'error'
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $parent_name = trim($_POST['parent_name']);
+    $parent_name = trim($_POST['first_name']);
+    $parent_lastname = trim($_POST['last_name']);
     $email = trim($_POST['email']);
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $password = $_POST['password']; // Store original password for logging
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    
+    // Log registration details (excluding actual password)
+    error_log("Registration - Email: " . $email);
+    error_log("Registration - Hashed password: " . $hashed_password);
+    
     $phone = trim($_POST['phone']);
     $phone_secondary = trim($_POST['phone_secondary']);
     $child_name = trim($_POST['child_name']);
@@ -22,15 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $other_details = trim($_POST['other_details']);
 
     // Basic validation
-    if (empty($parent_name) || empty($email) || empty($password) || empty($confirm_password) || empty($phone) || empty($child_name) || empty($age) || empty($level)) {
+    if (empty($parent_name) || empty($parent_lastname) || empty($email) || empty($password) || empty($phone) || empty($child_name) || empty($age) || empty($level)) {
         $message = "Please fill in all required fields.";
         $messageType = 'error';
-    } elseif ($password !== $confirm_password) {
-        $message = "Passwords do not match.";
-        $messageType = 'error';
+        error_log("Registration failed - Missing required fields");
     } elseif (strlen($password) < 8) {
         $message = "Password must be at least 8 characters long.";
         $messageType = 'error';
+        error_log("Registration failed - Password too short");
     } else {
         try {
             // Check if email already exists
@@ -40,26 +62,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($stmt->rowCount() > 0) {
                 $message = "Email already registered.";
                 $messageType = 'error';
+                error_log("Registration failed - Email already exists: " . $email);
             } else {
-                // Hash the password
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
                 // Insert new parent and child
                 $pdo->beginTransaction();
 
                 // Insert parent
-                $stmt = $pdo->prepare("INSERT INTO parents (first_name, email, password, phone, phone_secondary) VALUES (?, ?, ?, ?, ?)");
-                $stmt->execute([$parent_name, $email, $hashed_password, $phone, $phone_secondary]);
+                $stmt = $pdo->prepare("INSERT INTO parents (first_name, last_name, email, password, phone, phone_secondary) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$parent_name, $parent_lastname, $email, $hashed_password, $phone, $phone_secondary]);
                 $parent_id = $pdo->lastInsertId();
+                error_log("Parent registered successfully - ID: " . $parent_id);
 
                 // Insert child
-                $stmt = $pdo->prepare("INSERT INTO children (parent_id, name, age, level, allergies, allergies_details, disability, disability_details, other_health_info, other_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$parent_id, $child_name, $age, $level, $allergies, $allergies_details, $disability, $disability_details, $other_health_info, $other_details]);
+                $stmt = $pdo->prepare("INSERT INTO children (parent_id, first_name, last_name, age, level, allergies, allergies_details, disability, disability_details, other_health_info, other_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$parent_id, $child_name, $parent_lastname, $age, $level, $allergies, $allergies_details, $disability, $disability_details, $other_health_info, $other_details]);
+                error_log("Child registered successfully");
 
                 $pdo->commit();
                 
                 $message = "🎉 Inscription réussie ! Nous vous contacterons bientôt pour planifier une réunion. Redirection vers la page de connexion...";
                 $messageType = 'success';
+                error_log("Registration completed successfully");
                 
                 // Redirect to login page after 3 seconds
                 header("refresh:3;url=login.php");
@@ -68,11 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $pdo->rollBack();
             $message = "Registration failed: " . $e->getMessage();
             $messageType = 'error';
+            error_log("Registration failed - Database error: " . $e->getMessage());
         }
     }
 }
 ?>
-<!DOCTYPE html>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -131,26 +155,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="contact-form-container fade-in">
             <h2>Formulaire d'inscription</h2>
+            
             <form id="registration-form" method="POST" action="">
-                <label for="parent-name">👤 Nom complet du parent</label>
-                <input type="text" id="parent-name" name="parent_name" placeholder="Entrez votre nom" required>
+                <label for="first-name">👤 Prénom du parent</label>
+                <input type="text" id="first-name" name="first_name" placeholder="Entrez votre prénom" required>
+
+                <label for="last-name">👤 Nom de famille du parent</label>
+                <input type="text" id="last-name" name="last_name" placeholder="Entrez votre nom de famille" required>
 
                 <label for="email">📧 Email du parent</label>
                 <input type="email" id="email" name="email" 
                     placeholder="Entrez votre email" 
-                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     title="Veuillez entrer une adresse email valide (exemple: nom@domaine.com)"
-                    oninput="validateEmailOnInput(this)"
-                    onblur="validateEmailOnBlur(this)"
                     required>
                 <small class="input-hint">Format: nom@domaine.com</small>
 
                 <label for="password">🔒 Mot de passe</label>
                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
                 <small class="input-hint">Le mot de passe doit contenir au moins 8 caractères</small>
-
-                <label for="confirm_password">🔒 Confirmer le mot de passe</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmez votre mot de passe" required>
 
                 <label for="phone">📞 Numéro de téléphone (8 chiffres requis)</label>
                 <input type="tel" id="phone" name="phone" placeholder="Exemple: 12345678" pattern="[0-9]{8}" maxlength="8" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
@@ -179,12 +201,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <option value="5th Grade">5ème année</option>
                 </select>
 
-            </form>
-        </div>
+            
 
         <div class="contact-form-container fade-in">
             <h2>🏥 Informations de santé</h2>
-            <form id="health-form" method="POST" action="">
                 <label for="allergies">
                     🌿 Votre enfant a-t-il des allergies ?
                     <input type="checkbox" id="allergies" name="allergies" onchange="toggleTextarea('allergies-details')">
@@ -211,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <button type="submit" class="submit-btn">S'inscrire 🎉</button>
-            </form>
+        </form>
         </div>
 
         <div class="notice fade-in">
@@ -235,72 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p>© 2024 Tous droits réservés</p>
     </footer>
 
-    <script>
-        function validateEmailOnInput(input) {
-            // Convert to lowercase
-            input.value = input.value.toLowerCase();
-            
-            // Basic validation while typing
-            const email = input.value;
-            const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-            
-            if (!emailRegex.test(email)) {
-                input.setCustomValidity('Format email invalide');
-            } else {
-                validateEmailOnBlur(input);
-            }
-        }
-
-        function validateEmailOnBlur(input) {
-            const email = input.value;
-            const validDomains = ['.com', '.fr', '.org', '.net', '.edu', '.gov'];
-            const hasValidDomain = validDomains.some(domain => email.endsWith(domain));
-            
-            if (!hasValidDomain) {
-                input.setCustomValidity('Veuillez entrer une adresse email avec un domaine valide (.com, .fr, .org, etc.)');
-            } else {
-                input.setCustomValidity('');
-            }
-        }
-
-        function updateLevelOptions() {
-            const ageSelect = document.getElementById('age');
-            const levelSelect = document.getElementById('level');
-            const selectedAge = ageSelect.value;
-            
-            // Get all level options
-            const options = levelSelect.options;
-            
-            // Reset all options to enabled
-            for(let i = 0; i < options.length; i++) {
-                options[i].disabled = false;
-            }
-            
-            // Disable inappropriate options based on age
-            if (selectedAge === "3") {
-                options[3].disabled = true; // Disable 5th Grade
-            } else if (selectedAge === "4") {
-                options[1].disabled = true; // Disable 3rd Grade
-            } else if (selectedAge === "5") {
-                options[1].disabled = true; // Disable 3rd Grade
-                options[2].disabled = true; // Disable 4th Grade
-            }
-        }
-
-        function toggleTextarea(textareaId) {
-            const textarea = document.getElementById(textareaId);
-            let checkboxId;
-            
-            // Handle the special case for 'other-details'
-            if (textareaId === 'other-details') {
-                checkboxId = 'other-health-info';
-            } else {
-                checkboxId = textareaId.split('-')[0];
-            }
-            
-            const checkbox = document.getElementById(checkboxId);
-            textarea.style.display = checkbox.checked ? 'block' : 'none';
-        }
+    <script src="../js/registration.js">
     </script>
 </body>
 </html>
